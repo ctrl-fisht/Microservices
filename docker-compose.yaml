@@ -41,6 +41,15 @@ services:
     volumes:
       - redis_data:/data
     restart: always
+  minio:
+    container_name: minio
+    image: minio/minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+    command: server --console-address ":9001" /data
   ds-api:
     build:
       context: ./DirectoryService
@@ -61,12 +70,13 @@ services:
       - "DOTNET_USE_POLLING_FILE_WATCHER=true"
       - "ConnectionStrings__Postgres=Host=database;Port=5432;Username=postgres;Password=postgres;Database=directory_service"
       - "ConnectionStrings__Redis=redis"
+      - "ConnectionStrings__Seq=http://seq:5341"
     env_file:
       - .env
   fs-api:
     build:
       context: ./FileService
-      dockerfile: src/FileService/Dockerfile
+      dockerfile: Dockerfile
       args:
         GITHUB_USER: ${GITHUB_USER}
         GITHUB_TOKEN: ${GITHUB_TOKEN}  
@@ -81,17 +91,10 @@ services:
       - "DOTNET_RUNNING_IN_CONTAINER=true"
       - "DOTNET_USE_POLLING_FILE_WATCHER=true"
       - "ConnectionStrings__Minio=minio:9000"
+      - "ConnectionStrings__Seq=http://seq:5341"
     env_file:
       - .env
-  minio:
-    container_name: minio
-    image: minio/minio
-    ports:
-      - "9000:9000"
-      - "9001:9001"
-    volumes:
-      - minio_data:/data
-    command: server --console-address ":9001" /data
+
 volumes:
   postgres_data:
   seq-data:

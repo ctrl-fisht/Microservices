@@ -1,0 +1,12 @@
+<Project>
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="Shared.Core" />
+        <PackageReference Include="Shared.Kernel" />
+    </ItemGroup>
+</Project>
