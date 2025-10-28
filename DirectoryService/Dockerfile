@@ -1,8 +1,6 @@
 ﻿FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
-USER $APP_UID
 WORKDIR /app
 EXPOSE 8080
-EXPOSE 8081
 
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG GITHUB_USER
@@ -15,24 +13,27 @@ RUN echo '<?xml version="1.0" encoding="utf-8"?> \
 <configuration> \
   <packageSources> \
     <clear /> \
+    <add key="GitHub" value="https://nuget.pkg.github.com/'$GITHUB_USER'/index.json" /> \
     <add key="nuget.org" value="https://api.nuget.org/v3/index.json" protocolVersion="3" /> \
-    <add key="github" value="https://nuget.pkg.github.com/'$GITHUB_USER'/index.json" /> \
   </packageSources> \
+  <packageSourceMapping> \
+    <packageSource key="GitHub"> \
+      <package pattern="Shared.*" /> \
+    </packageSource> \
+    <packageSource key="nuget.org"> \
+      <package pattern="*" /> \
+    </packageSource> \
+  </packageSourceMapping> \
   <packageSourceCredentials> \
-    <github> \
+    <GitHub> \
       <add key="Username" value="'$GITHUB_USER'" /> \
       <add key="ClearTextPassword" value="'$GITHUB_TOKEN'" /> \
-    </github> \
+    </GitHub> \
   </packageSourceCredentials> \
 </configuration>' > nuget.config
 
-COPY ["src/DirectoryService.WebAPI/DirectoryService.WebAPI.csproj", "src/DirectoryService.WebAPI/"]
-COPY ["src/DirectoryService.Application/DirectoryService.Application.csproj", "src/DirectoryService.Application/"]
-COPY ["src/DirectoryService.Contracts/DirectoryService.Contracts.csproj", "src/DirectoryService.Contracts/"]
-COPY ["src/DirectoryService.Domain/DirectoryService.Domain.csproj", "src/DirectoryService.Domain/"]
-COPY ["src/DirectoryService.Infrastructure/DirectoryService.Infrastructure.csproj", "src/DirectoryService.Infrastructure/"]
-RUN dotnet restore "src/DirectoryService.WebAPI/DirectoryService.WebAPI.csproj"
 COPY . .
+RUN dotnet restore "src/DirectoryService.WebAPI/DirectoryService.WebAPI.csproj"
 WORKDIR "/src/src/DirectoryService.WebAPI"
 RUN dotnet build "./DirectoryService.WebAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build
 

@@ -4,10 +4,36 @@ WORKDIR /app
 EXPOSE 8080
 
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+ARG GITHUB_USER
+ARG GITHUB_TOKEN
 ARG BUILD_CONFIGURATION=Release
-WORKDIR /prj
+WORKDIR /src
+
+RUN echo '<?xml version="1.0" encoding="utf-8"?> \
+<configuration> \
+  <packageSources> \
+    <clear /> \
+    <add key="GitHub" value="https://nuget.pkg.github.com/'$GITHUB_USER'/index.json" /> \
+    <add key="nuget.org" value="https://api.nuget.org/v3/index.json" protocolVersion="3" /> \
+  </packageSources> \
+  <packageSourceMapping> \
+    <packageSource key="GitHub"> \
+      <package pattern="Shared.*" /> \
+    </packageSource> \
+    <packageSource key="nuget.org"> \
+      <package pattern="*" /> \
+    </packageSource> \
+  </packageSourceMapping> \
+  <packageSourceCredentials> \
+    <GitHub> \
+      <add key="Username" value="'$GITHUB_USER'" /> \
+      <add key="ClearTextPassword" value="'$GITHUB_TOKEN'" /> \
+    </GitHub> \
+  </packageSourceCredentials> \
+</configuration>' > nuget.config
+
 COPY . .
-WORKDIR "/prj/src/FileService.Core"
+WORKDIR "/src/src/FileService.Core"
 RUN dotnet restore "FileService.Core.csproj"
 RUN dotnet build "FileService.Core.csproj" -c $BUILD_CONFIGURATION -o /app/build
 

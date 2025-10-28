@@ -2,24 +2,24 @@
 
     <PropertyGroup>
         <TargetFramework>net9.0</TargetFramework>
-        <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
         <UserSecretsId>d720abea-02db-414b-a0f9-8c272df76062</UserSecretsId>
         <RootNamespace>DirectoryService.Presentation</RootNamespace>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-  </PropertyGroup>
+    </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.7" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.8">
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
-        <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
-        <PackageReference Include="Serilog.Sinks.Seq" Version="9.0.0" />
-        <PackageReference Include="Shared.Framework" Version="1.0.1" />
-        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="9.0.3" />
+        <PackageReference Include="prometheus-net.AspNetCore"/>
+        <PackageReference Include="Serilog.AspNetCore"/>
+        <PackageReference Include="Serilog.Sinks.Console" />
+        <PackageReference Include="Shared.Framework"/>
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI"/>
     </ItemGroup>
 
     <ItemGroup>

@@ -5,8 +5,8 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+    <PackageReference Include="prometheus-net.AspNetCore" />
     <PackageReference Include="Serilog.AspNetCore" />
-    <PackageReference Include="Serilog.Sinks.Seq" />
     <PackageReference Include="Serilog.Sinks.Trace" />
     <PackageReference Include="Shared.Framework" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" />
