@@ -3,6 +3,7 @@ using DirectoryService.Infrastructure;
 using DirectoryService.Presentation.Extensions;
 using Serilog;
 using Shared.Framework;
+using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +17,7 @@ builder.Services
     .AddApplication();
 
 var app = builder.Build();
-
+app.UseHttpMetrics();
 app.UseSerilogRequestLogging();
 
 app.UseMiddleware<ExceptionsMiddleware>();
@@ -31,7 +32,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapControllers();
-
+app.MapMetrics();
 app.Run();
 
 namespace DirectoryService.Presentation

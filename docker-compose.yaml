@@ -1,8 +1,7 @@
 services:
   database:
     container_name: database
-    image: postgres
-    restart: always
+    image: postgres:17.6
     environment:
       POSTGRES_DB: "directory_service"
       POSTGRES_PASSWORD: postgres
@@ -21,18 +20,6 @@ services:
       - "5050:80"
     depends_on:
       - database
-  seq:
-    container_name: seq
-    image: datalust/seq
-    restart: unless-stopped
-    environment:
-      - ACCEPT_EULA=Y
-      - SEQ_FIRSTRUN_ADMINPASSWORD=admin
-    ports:
-      - "5341:5341"
-      - "8081:80"
-    volumes:
-      - seq-data:/data
   redis:
     image: redis:latest
     container_name: redis
@@ -40,7 +27,6 @@ services:
       - "6379:6379"
     volumes:
       - redis_data:/data
-    restart: always
   minio:
     container_name: minio
     image: minio/minio
@@ -50,10 +36,50 @@ services:
     volumes:
       - minio_data:/data
     command: server --console-address ":9001" /data
+
+  tm-loki:
+    container_name: tm-loki
+    image: grafana/loki:3.4.1
+    volumes:
+      - ./loki-config.yaml:/mnt/config/loki-config.yaml:ro
+    ports:
+      - "3100:3100"
+    command: -config.file=/mnt/config/loki-config.yaml
+  tm-prometheus:
+    image: prom/prometheus:v3.7.2
+    container_name: tm-prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    ports:
+      - "9090:9090"
+    expose:
+      - 9090
+  tm-promtail:
+    image: grafana/promtail:2.9.0
+    container_name: tm-promtail
+    volumes:
+      - ./promtail-config.yaml:/etc/promtail/config.yaml
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: -config.file=/etc/promtail/config.yaml
+  tm-grafana:
+    container_name: tm-grafana
+    image: grafana/grafana
+    ports:
+      - '3002:3000'
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana-datasources.yaml:/etc/grafana/provisioning/datasources/datasources.yaml:ro
   ds-api:
     build:
       context: ./DirectoryService
-      dockerfile: src/DirectoryService.WebAPI/Dockerfile
+      dockerfile: Dockerfile
       args:
         GITHUB_USER: ${GITHUB_USER}
         GITHUB_TOKEN: ${GITHUB_TOKEN}
@@ -100,3 +126,6 @@ volumes:
   seq-data:
   redis_data:
   minio_data:
+  grafana-storage:
+  prometheus_data:
+  grafana-data:
