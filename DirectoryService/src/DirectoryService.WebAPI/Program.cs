@@ -1,14 +1,12 @@
 using DirectoryService.Application;
 using DirectoryService.Infrastructure;
+using DirectoryService.Presentation.Extensions;
 using Serilog;
 using Shared.Framework;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Host.UseSerilog((context, loggerConfig) =>
-{
-    loggerConfig.ReadFrom.Configuration(context.Configuration);
-});
+builder.Host.AddLogging(builder.Configuration);
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();

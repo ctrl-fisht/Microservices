@@ -3,9 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileService", "src\FileService\FileService.csproj", "{4EDBD7A2-BEBE-45F4-A609-22150B48CA9F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileService.Core", "src\FileService.Core\FileService.Core.csproj", "{D31A7FE7-2CC1-4F87-95CA-62C606F5B13B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DockerCompose", "DockerCompose", "{6904F43E-3F36-4590-82B5-6F7FC8D9C1F5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileService.Domain", "src\FileService.Domain\FileService.Domain.csproj", "{710E4061-081A-4FC2-8FD1-2197A0A453C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileService.Infrastructure.Postgres", "src\FileService.Infrastructure.Postgres\FileService.Infrastructure.Postgres.csproj", "{61C38E1C-FCB4-44D9-AE72-2BFE62BAB021}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileService.Infrastructure.S3", "src\FileService.Infrastructure.S3\FileService.Infrastructure.S3.csproj", "{5A564B48-7379-455D-A11D-84192CE2C8E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileService.Contracts", "src\FileService.Contracts\FileService.Contracts.csproj", "{7A826F5D-1977-4A05-BAF2-89EACBE154F8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution Files", "{2E2B1501-861B-4DEF-8DB2-6CADF180049A}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+		Directory.Packages.props = Directory.Packages.props
+		Dockerfile = Dockerfile
+		.dockerignore = .dockerignore
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker Compose (Общий)", "Docker Compose (Общий)", "{FF9710FD-9CE9-46AE-99AB-85BBFBC1EDD3}"
 	ProjectSection(SolutionItems) = preProject
 		..\docker-compose.yaml = ..\docker-compose.yaml
 	EndProjectSection
@@ -19,9 +35,25 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4EDBD7A2-BEBE-45F4-A609-22150B48CA9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4EDBD7A2-BEBE-45F4-A609-22150B48CA9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4EDBD7A2-BEBE-45F4-A609-22150B48CA9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4EDBD7A2-BEBE-45F4-A609-22150B48CA9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D31A7FE7-2CC1-4F87-95CA-62C606F5B13B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D31A7FE7-2CC1-4F87-95CA-62C606F5B13B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D31A7FE7-2CC1-4F87-95CA-62C606F5B13B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D31A7FE7-2CC1-4F87-95CA-62C606F5B13B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{710E4061-081A-4FC2-8FD1-2197A0A453C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{710E4061-081A-4FC2-8FD1-2197A0A453C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{710E4061-081A-4FC2-8FD1-2197A0A453C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{710E4061-081A-4FC2-8FD1-2197A0A453C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61C38E1C-FCB4-44D9-AE72-2BFE62BAB021}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61C38E1C-FCB4-44D9-AE72-2BFE62BAB021}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61C38E1C-FCB4-44D9-AE72-2BFE62BAB021}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61C38E1C-FCB4-44D9-AE72-2BFE62BAB021}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A564B48-7379-455D-A11D-84192CE2C8E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A564B48-7379-455D-A11D-84192CE2C8E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A564B48-7379-455D-A11D-84192CE2C8E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A564B48-7379-455D-A11D-84192CE2C8E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A826F5D-1977-4A05-BAF2-89EACBE154F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A826F5D-1977-4A05-BAF2-89EACBE154F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A826F5D-1977-4A05-BAF2-89EACBE154F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A826F5D-1977-4A05-BAF2-89EACBE154F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
