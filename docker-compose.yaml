@@ -36,7 +36,17 @@ services:
     volumes:
       - minio_data:/data
     command: server --console-address ":9001" /data
-
+  seq:
+    container_name: seq
+    image: datalust/seq
+    environment:
+      - ACCEPT_EULA=Y
+      - SEQ_FIRSTRUN_ADMINPASSWORD=admin
+    ports:
+      - "5341:5341"
+      - "8081:80"
+    volumes:
+      - seq-data:/data
   tm-loki:
     container_name: tm-loki
     image: grafana/loki:3.4.1
