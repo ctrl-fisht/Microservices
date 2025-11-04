@@ -29,7 +29,7 @@ public sealed class PreviewAsset : MediaAsset
             return Error.Validation(
                 "invalid.extension", 
                 $"Video extension must be one of: {string.Join(",", AllowedExtensions)}");
-        if (mediaData.ContentType.Value != MediaType.Image)
+        if (mediaData.ContentType.MediaType != MediaType.Image)
             return Error.Validation("invalid.media.type", "Media type must be Image");
         
         if (mediaData.Size >= MAX_SIZE)

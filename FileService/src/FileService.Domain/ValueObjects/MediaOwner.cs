@@ -6,7 +6,7 @@ namespace FileService.Domain;
 public sealed record MediaOwner
 {
     private static List<string> _contextWhiteList = 
-        ["lesson", "course", "user", "department"];
+        ["department"];
     
     public string Context { get; }
     public Guid EntityId { get; }

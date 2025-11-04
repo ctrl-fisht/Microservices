@@ -5,26 +5,27 @@ namespace FileService.Domain.ValueObjects;
 
 public sealed record ContentType
 {
-    public MediaType Value { get;}
-
-    private ContentType(MediaType value)
+    public string MimeType { get;}
+    public MediaType MediaType { get;}
+    private ContentType(string mimeType, MediaType mediaType)
     {
-        Value = value;
+        MimeType = mimeType;
+        MediaType = mediaType;
     }
 
-    public Result<ContentType, Error> Create(string contentType)
+    public Result<ContentType, Error> Create(string mimeType)
     {
-        if (string.IsNullOrWhiteSpace(contentType))
+        if (string.IsNullOrWhiteSpace(mimeType))
             return Error.Failure("invalid.argument", "ContentType cannot be empty");
 
-        var type = contentType switch
+        var mediaType = mimeType switch
         {
-            _ when contentType.Contains("video") => MediaType.Video,
-            _ when contentType.Contains("audio") => MediaType.Audio,
-            _ when contentType.Contains("image") => MediaType.Image,
+            _ when mimeType.Contains("video") => MediaType.Video,
+            _ when mimeType.Contains("audio") => MediaType.Audio,
+            _ when mimeType.Contains("image") => MediaType.Image,
             _ => MediaType.Unknown
         };
 
-        return new ContentType(type);
+        return new ContentType(mimeType, mediaType);
     }
 }
