@@ -4,6 +4,7 @@ using DirectoryService.Presentation.Extensions;
 using Serilog;
 using Shared.Framework;
 using Prometheus;
+using Shared.Framework.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,7 @@ builder.Services
     .AddApplication();
 
 var app = builder.Build();
+app.UseRequestCorrelationId();
 app.UseHttpMetrics();
 app.UseSerilogRequestLogging();
 
