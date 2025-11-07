@@ -1,6 +1,6 @@
 ﻿using Serilog;
 
-namespace FileService.Core.Extensions;
+namespace FileService.WebAPI.Extensions;
 
 public static class LoggingExtensions
 {

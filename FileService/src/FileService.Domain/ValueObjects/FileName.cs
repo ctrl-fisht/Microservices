@@ -1,13 +1,17 @@
-﻿using CSharpFunctionalExtensions;
+﻿using System.Text.Json.Serialization;
+using CSharpFunctionalExtensions;
 using Shared.Kernel.Errors;
 
-namespace FileService.Domain;
+namespace FileService.Domain.ValueObjects;
 
 public sealed record FileName
 {
+    
     public string Name { get; }
+    
     public string Extension { get; }
 
+    [JsonConstructor]
     private FileName(string name, string extension)
     {
         Name = name;
@@ -32,4 +36,6 @@ public sealed record FileName
 
         return new FileName(filename, extension);
     }
+
+    public static FileName FromDb(string name, string extension) => new(name, extension);
 }

@@ -1,8 +1,9 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 using CSharpFunctionalExtensions;
 using Shared.Kernel.Errors;
 
-namespace FileService.Domain;
+namespace FileService.Domain.ValueObjects;
 
 public sealed record StorageKey
 {
@@ -11,7 +12,9 @@ public sealed record StorageKey
             RegexOptions.Compiled);
     
     public string Bucket { get; }
+    
     public string? Prefix { get; }
+    
     public string Key { get; }
 
     public string Value => Prefix switch
@@ -20,9 +23,10 @@ public sealed record StorageKey
         _ => $"{Prefix}/{Key}"
     };
 
+    
     public string FullPath => $"{Bucket}/{Value}";
     
-    public StorageKey None => new StorageKey("", null, "");
+    public static StorageKey None => new StorageKey("", null, "");
     
     private StorageKey(string bucket, string? prefix, string key)
     {
@@ -81,4 +85,7 @@ public sealed record StorageKey
         
         return new StorageKey(bucket, normalizedKeyResult.Value, normalizedPrefixResult.Value);
     }
+
+    public static StorageKey FromDb(string bucket, string? prefix, string key)
+        => new(bucket, prefix, key);
 }

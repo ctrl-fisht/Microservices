@@ -1,4 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
+using FileService.Domain.ValueObjects;
 using Shared.Kernel.Errors;
 
 namespace FileService.Domain.Entities;
