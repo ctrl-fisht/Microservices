@@ -17,11 +17,13 @@ builder.Services.AddOpenApi();
 builder.Services.AddPostgresEfCore(builder.Configuration);
 builder.Services.AddApplicationServices();
 
-builder.Services.Configure<S3Options>(builder.Configuration.GetRequiredSection("S3Options"));
+builder.Services.AddS3(builder.Configuration, initializeBuckets: true);
 
 var app = builder.Build();
 app.UseRequestCorrelationId();
 app.UseSerilogRequestLogging();
+
+
 app.UseHttpMetrics();
 
 if (app.Environment.IsDevelopment())
