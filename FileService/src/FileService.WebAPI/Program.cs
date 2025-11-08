@@ -2,6 +2,7 @@ using FileService.Application;
 using FileService.Application.Features;
 using FileService.WebAPI.Extensions;
 using FileService.Infrastructure.Postgres;
+using FileService.Infrastructure.S3;
 using Microsoft.EntityFrameworkCore;
 using Shared.Framework.VerticalSlice;
 using Prometheus;
@@ -15,6 +16,8 @@ builder.Host.AddLogging(builder.Configuration);
 builder.Services.AddOpenApi();
 builder.Services.AddPostgresEfCore(builder.Configuration);
 builder.Services.AddApplicationServices();
+
+builder.Services.Configure<S3Options>(builder.Configuration.GetRequiredSection("S3Options"));
 
 var app = builder.Build();
 app.UseRequestCorrelationId();
