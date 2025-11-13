@@ -10,6 +10,9 @@ public sealed record FileName
     public string Name { get; }
     
     public string Extension { get; }
+    
+    [JsonIgnore]
+    public string Full => $"{Name}.{Extension}";
 
     [JsonConstructor]
     private FileName(string name, string extension)

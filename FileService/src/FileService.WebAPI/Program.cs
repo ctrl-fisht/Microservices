@@ -12,7 +12,7 @@ using Shared.Framework.Middlewares;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.AddLogging(builder.Configuration);
-// builder.Services.AddAppEndpoints(typeof(Program).Assembly);
+builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddPostgresEfCore(builder.Configuration);
 builder.Services.AddApplicationServices();
@@ -41,7 +41,7 @@ if (app.Environment.IsDevelopment())
 }
 
 
-app.MapGet("/", (TestHandler handler) => handler.Handle() );
+app.MapControllers();
 app.MapMetrics();
 
 // app.UseAppEndpoints();

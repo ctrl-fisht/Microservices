@@ -1,5 +1,6 @@
 ﻿using Amazon.S3;
 using Amazon.S3.Model;
+using FileService.Application.Abstractions;
 using FileService.Infrastructure.S3.S3BucketInitializer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -32,6 +33,8 @@ public static class DependencyInjection
 
         if (initializeBuckets)
             services.AddHostedService<S3BucketInitializerService>();
+
+        services.AddSingleton<IS3Provider, S3Provider>();
         
         return services;
     }

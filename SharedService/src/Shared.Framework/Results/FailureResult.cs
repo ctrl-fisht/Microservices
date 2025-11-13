@@ -48,6 +48,7 @@ public class FailureResult : IResult
         ErrorType.Conflict => StatusCodes.Status409Conflict,
         ErrorType.NotFound => StatusCodes.Status404NotFound,
         ErrorType.Failure => StatusCodes.Status500InternalServerError,
+        ErrorType.Forbidden => StatusCodes.Status403Forbidden,
         _ => StatusCodes.Status500InternalServerError
     };
 

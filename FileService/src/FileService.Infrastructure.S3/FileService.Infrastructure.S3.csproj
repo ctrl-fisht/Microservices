@@ -5,4 +5,7 @@
     <PackageReference Include="Microsoft.Extensions.Options" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FileService.Application\FileService.Application.csproj" />
+  </ItemGroup>
 </Project>
