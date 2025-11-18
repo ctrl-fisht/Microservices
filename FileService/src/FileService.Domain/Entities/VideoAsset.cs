@@ -14,8 +14,6 @@ public sealed class VideoAsset : MediaAsset
     public const string HLS_PREFIX = "hls";
     public const string MASTER_PLAYLIST_NAME = "master.m3u8";
     public static readonly string[] AllowedExtensions = ["mp4", "mkv", "avi", "mov"];
-    
-    [JsonPropertyName("hls_root_key")]
     public StorageKey HlsRootKey { get; private set; }
     
     private VideoAsset(MediaData mediaData, StorageKey rawKey, MediaOwner owner, StorageKey hlsRootKey) 

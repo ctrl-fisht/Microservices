@@ -1,9 +1,8 @@
 using FileService.Application;
-using FileService.Application.Features;
 using FileService.WebAPI.Extensions;
 using FileService.Infrastructure.Postgres;
+using FileService.Infrastructure.S3;
 using Microsoft.EntityFrameworkCore;
-using Shared.Framework.VerticalSlice;
 using Prometheus;
 using Serilog;
 using Shared.Framework.Middlewares;
@@ -11,14 +10,18 @@ using Shared.Framework.Middlewares;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.AddLogging(builder.Configuration);
-// builder.Services.AddAppEndpoints(typeof(Program).Assembly);
+builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddPostgresEfCore(builder.Configuration);
 builder.Services.AddApplicationServices();
 
+builder.Services.AddS3(builder.Configuration, initializeBuckets: true);
+
 var app = builder.Build();
 app.UseRequestCorrelationId();
 app.UseSerilogRequestLogging();
+
+
 app.UseHttpMetrics();
 
 if (app.Environment.IsDevelopment())
@@ -36,7 +39,7 @@ if (app.Environment.IsDevelopment())
 }
 
 
-app.MapGet("/", (TestHandler handler) => handler.Handle() );
+app.MapControllers();
 app.MapMetrics();
 
 // app.UseAppEndpoints();

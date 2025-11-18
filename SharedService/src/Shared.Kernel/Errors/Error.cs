@@ -48,6 +48,11 @@ public record Error
         return new Error(code, message, ErrorType.NotFound);
     }
 
+    public static Error Forbidden(string code, string message)
+    {
+        return new Error(code, message, ErrorType.Forbidden);
+    }
+
     public static Error Conflict(string code, string message)
     {
         return new Error(code, message, ErrorType.Conflict);

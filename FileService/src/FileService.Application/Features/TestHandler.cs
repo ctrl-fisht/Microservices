@@ -1,4 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
+using FileService.Application.Abstractions;
 using FileService.Domain.Entities;
 using FileService.Domain.ValueObjects;
 using FileService.Infrastructure.Postgres;
@@ -9,27 +10,22 @@ namespace FileService.Application.Features;
 public class TestHandler
 {
     private readonly FileServiceDbContext _dbContext;
+    private readonly IS3Provider _s3Provider;
 
-    public TestHandler(FileServiceDbContext dbContext)
+    public TestHandler(FileServiceDbContext dbContext, IS3Provider s3Provider)
     {
         _dbContext = dbContext;
+        _s3Provider = s3Provider;
     }
     
     public async Task<MediaAsset> Handle()
     {
-        var mediaData = MediaData.Create(
-            fileName: FileName.Create("videofile.mp4").Value,
-            contentType: ContentType.Create("video/mp4").Value,
-            100000,
-            100).Value;
-        var storageKey = StorageKey.Create("videos", "video", "user1").Value;
-        var mediaOwner = MediaOwner.ForDepartment(Guid.NewGuid()).Value;
-        var hlsRootKey = StorageKey.Create("videos", "video", "user1").Value;
-        
-        var videoAsset = VideoAsset.Create(mediaData, storageKey, mediaOwner, hlsRootKey).Value;
-        videoAsset.CompleteProcessing(DateTime.UtcNow);
-        await _dbContext.MediaAssets.AddAsync(videoAsset);
-        await _dbContext.SaveChangesAsync();
+        // var mediaData = MediaData.Create("", "", 5000, )
+        // var newAsset = new VideoAsset();
+        //
+        // var mediaAsset = _dbContext.MediaAssets.First();
+        //
+        // await _s3Provider.UploadFileAsync()
         return _dbContext.MediaAssets.First();
     }
 }
