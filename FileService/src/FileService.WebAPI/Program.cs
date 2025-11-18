@@ -1,10 +1,8 @@
 using FileService.Application;
-using FileService.Application.Features;
 using FileService.WebAPI.Extensions;
 using FileService.Infrastructure.Postgres;
 using FileService.Infrastructure.S3;
 using Microsoft.EntityFrameworkCore;
-using Shared.Framework.VerticalSlice;
 using Prometheus;
 using Serilog;
 using Shared.Framework.Middlewares;
