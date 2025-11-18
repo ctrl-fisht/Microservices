@@ -1,6 +1,6 @@
 services:
-  database:
-    container_name: database
+  ds-database:
+    container_name: ds-database
     image: postgres:17.6
     environment:
       POSTGRES_DB: "directory_service"
@@ -10,6 +10,17 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+  fs-database:
+    container_name: fs-database
+    image: postgres:17.6
+    environment:
+      POSTGRES_DB: "file_service"
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - fs_postgres_data:/var/lib/postgresql/data
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4
@@ -19,7 +30,8 @@ services:
     ports:
       - "5050:80"
     depends_on:
-      - database
+      - fs-database
+      - ds-database
   redis:
     image: redis:latest
     container_name: redis
@@ -97,18 +109,11 @@ services:
     ports:
       - "5000:8080"
     depends_on:
-      - database
+      - ds-database
       - seq
       - redis
-    environment:
-      - "ASPNETCORE_ENVIRONMENT=Development"
-      - "DOTNET_RUNNING_IN_CONTAINER=true"
-      - "DOTNET_USE_POLLING_FILE_WATCHER=true"
-      - "ConnectionStrings__Postgres=Host=database;Port=5432;Username=postgres;Password=postgres;Database=directory_service"
-      - "ConnectionStrings__Redis=redis"
-      - "ConnectionStrings__Seq=http://seq:5341"
     env_file:
-      - .env
+      - ds.env
   fs-api:
     build:
       context: ./FileService
@@ -122,14 +127,9 @@ services:
     depends_on:
       - seq
       - minio
-    environment:
-      - "ASPNETCORE_ENVIRONMENT=Development"
-      - "DOTNET_RUNNING_IN_CONTAINER=true"
-      - "DOTNET_USE_POLLING_FILE_WATCHER=true"
-      - "ConnectionStrings__Minio=minio:9000"
-      - "ConnectionStrings__Seq=http://seq:5341"
+      - fs-database
     env_file:
-      - .env
+      - fs.env
 
 volumes:
   postgres_data:
@@ -139,3 +139,4 @@ volumes:
   grafana-storage:
   prometheus_data:
   grafana-data:
+  fs_postgres_data:

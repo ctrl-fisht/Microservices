@@ -1,5 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
+using System.Text.Json.Serialization;
 using CSharpFunctionalExtensions;
+using FileService.Domain.ValueObjects;
 using Shared.Kernel.Errors;
 
 namespace FileService.Domain.Entities;
@@ -13,6 +15,7 @@ public sealed class VideoAsset : MediaAsset
     public const string MASTER_PLAYLIST_NAME = "master.m3u8";
     public static readonly string[] AllowedExtensions = ["mp4", "mkv", "avi", "mov"];
     
+    [JsonPropertyName("hls_root_key")]
     public StorageKey HlsRootKey { get; private set; }
     
     private VideoAsset(MediaData mediaData, StorageKey rawKey, MediaOwner owner, StorageKey hlsRootKey) 

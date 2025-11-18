@@ -1,7 +1,8 @@
-﻿using CSharpFunctionalExtensions;
+﻿using System.Text.Json.Serialization;
+using CSharpFunctionalExtensions;
 using Shared.Kernel.Errors;
 
-namespace FileService.Domain;
+namespace FileService.Domain.ValueObjects;
 
 public sealed record MediaOwner
 {
@@ -9,6 +10,7 @@ public sealed record MediaOwner
         ["department"];
     
     public string Context { get; }
+    
     public Guid EntityId { get; }
 
     private MediaOwner(string context, Guid entityId)
@@ -36,6 +38,9 @@ public sealed record MediaOwner
         
         return new MediaOwner(contextLowercase, entityId);
     }
+
+    public static MediaOwner FromDb(string context, Guid entityId)
+        => new(context, entityId);
 
     public static Result<MediaOwner, Error> ForLesson(Guid entityId)
         => Create("lesson", entityId);

@@ -4,7 +4,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <PackageId>Shared.Framework</PackageId>
-        <Version>1.0.5</Version>
+        <Version>1.0.10</Version>
         <Authors>ctrlfisht</Authors>
         <Company>Company</Company>
         <Description>Shared framework for ASP.NET Core</Description>

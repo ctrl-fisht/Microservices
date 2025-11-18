@@ -1,11 +1,14 @@
-﻿using CSharpFunctionalExtensions;
+﻿using System.Text.Json.Serialization;
+using CSharpFunctionalExtensions;
 using Shared.Kernel.Errors;
 
 namespace FileService.Domain.ValueObjects;
 
 public sealed record ContentType
 {
+    
     public string MimeType { get;}
+    
     public MediaType MediaType { get;}
     private ContentType(string mimeType, MediaType mediaType)
     {
@@ -13,7 +16,7 @@ public sealed record ContentType
         MediaType = mediaType;
     }
 
-    public Result<ContentType, Error> Create(string mimeType)
+    public static Result<ContentType, Error> Create(string mimeType)
     {
         if (string.IsNullOrWhiteSpace(mimeType))
             return Error.Failure("invalid.argument", "ContentType cannot be empty");
@@ -28,4 +31,6 @@ public sealed record ContentType
 
         return new ContentType(mimeType, mediaType);
     }
+
+    public static ContentType FromDb(string mimeType, MediaType mediaType) => new(mimeType, mediaType);
 }
