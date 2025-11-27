@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FileService.Application.Repositories;
+using FileService.Infrastructure.Postgres.EfCore.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -21,6 +23,8 @@ public static class DependencyInjection
                     });
                 options.EnableDetailedErrors();
             });
+
+            services.AddScoped<IMediaRepository, MediaRepository>();
             
             return services;
     }

@@ -28,11 +28,11 @@ public sealed record StorageKey
     
     public static StorageKey None => new StorageKey("", null, "");
     
-    private StorageKey(string bucket, string? prefix, string key)
+    private StorageKey(string bucket, string key, string? prefix)
     {
         Bucket = bucket;
-        Prefix = prefix;
         Key = key;
+        Prefix = prefix;
     }
 
     
