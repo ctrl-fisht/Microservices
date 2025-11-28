@@ -2,15 +2,18 @@
 
 public class S3Options
 {
-    public string Endpoint { get; set; } = null!;
-    public string AccessKey { get; set; } = null!;
-    public string SecretKey { get; set; } = null!;
-    public bool WithSsl { get; set; }
-    public List<string> RequiredBuckets { get; set; } = null!;
-    public int UploadUrlExpirationMinutes { get; set; }
-    public int DownloadUrlExpirationHours { get; set; }
-    public int MaxConcurrentRequests { get; set; }
-    public bool OverwriteExistingPolicies { get; set; }
+    public string Endpoint { get; init; } = null!;
+    public string AccessKey { get; init; } = null!;
+    public string SecretKey { get; init; } = null!;
+    public bool WithSsl { get; init; }
+    public List<string> RequiredBuckets { get; init; } = null!;
+    public int UploadUrlExpirationMinutes { get; init; }
+    public int DownloadUrlExpirationHours { get; init; }
+    public int MaxConcurrentRequests { get; init; }
+    public bool OverwriteExistingPolicies { get; init; }
+
+    public long RecommendedChunkSize { get; init; } = 500 * 1024 * 1024;
+    public int MaxChunks { get; init; } = 100;
     
     public static string PublicPolicy(string bucket) => $@"{{
                               ""Version"": ""2012-10-17"",

@@ -30,7 +30,7 @@ public abstract class MediaAsset
         Owner = owner;
     }
     
-    protected UnitResult<Error> MarkUploaded(DateTime dateTime)
+    public UnitResult<Error> MarkUploaded(DateTime dateTime)
     {
         if (Status is not Status.Loading)
             return UnitResult.Failure(
@@ -47,7 +47,7 @@ public abstract class MediaAsset
 
     }
 
-    protected UnitResult<Error> MarkReady(StorageKey finalKey, DateTime dateTime)
+    public UnitResult<Error> MarkReady(StorageKey finalKey, DateTime dateTime)
     {
         if (Status is not Status.Uploaded)
             return UnitResult.Failure<Error>(
@@ -64,7 +64,7 @@ public abstract class MediaAsset
         return UnitResult.Success<Error>();
     }
 
-    protected UnitResult<Error> MarkFailed(DateTime dateTime)
+    public UnitResult<Error> MarkFailed(DateTime dateTime)
     {
         if (Status is not Status.Uploaded)
             return UnitResult.Failure<Error>(
@@ -80,7 +80,7 @@ public abstract class MediaAsset
         return UnitResult.Success<Error>();
     }
 
-    protected UnitResult<Error> MarkDeleted()
+    public UnitResult<Error> MarkDeleted()
     {
         Status = Status.Deleted;
         UpdatedAt = DateTime.Now;
