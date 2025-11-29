@@ -69,4 +69,14 @@ public class FilesController() : ControllerBase
     {
         return await handler.HandleAsync(mediaAssetIds, cancellationToken);
     }
+    
+    [HttpGet]
+    [Route("{mediaAssetId:guid}/url")]
+    public async Task<EndpointResult<string>> GetMediaAssetDownloadUrl(
+        [FromRoute]  Guid mediaAssetId,
+        [FromServices] Features.GetMediaAssetDownloadUrl.Handler handler,
+        CancellationToken cancellationToken)
+    {
+        return await handler.HandleAsync(mediaAssetId, cancellationToken);
+    }
 }
