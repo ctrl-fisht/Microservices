@@ -79,4 +79,14 @@ public class FilesController() : ControllerBase
     {
         return await handler.HandleAsync(mediaAssetId, cancellationToken);
     }
+    
+    [HttpDelete]
+    [Route("{mediaAssetId:guid}")]
+    public async Task<EndpointResult<Guid>> DeleteMediaAsset(
+        [FromRoute]  Guid mediaAssetId,
+        [FromServices] Features.DeleteMediaAsset.Handler handler,
+        CancellationToken cancellationToken)
+    {
+        return await handler.HandleAsync(mediaAssetId, cancellationToken);
+    }
 }

@@ -19,10 +19,9 @@ public class MediaRepository : IMediaRepository
         _logger = logger;
     }
     
-    public async Task<UnitResult<Error>> AddAsync(MediaAsset mediaAsset, CancellationToken cancellationToken)
+    public async Task AddAsync(MediaAsset mediaAsset, CancellationToken cancellationToken)
     {
         await _context.MediaAssets.AddAsync(mediaAsset, cancellationToken);
-        return UnitResult.Success<Error>();
     }
 
     public async Task<Result<MediaAsset, Error>> GetByIdAsync(Guid id, CancellationToken cancellationToken)
