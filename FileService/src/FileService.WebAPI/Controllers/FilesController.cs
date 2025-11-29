@@ -59,4 +59,14 @@ public class FilesController() : ControllerBase
     {
         return await handler.HandleAsync(mediaAssetId, cancellationToken);
     }
+    
+    [HttpPost]
+    [Route("batch")]
+    public async Task<EndpointResult<List<MediaAssetInfoDto>>> GetMediaAssetInfoBatch(
+        [FromBody] List<Guid> mediaAssetIds,
+        [FromServices] Features.GetMediaAssetsInfo.Handler handler,
+        CancellationToken cancellationToken)
+    {
+        return await handler.HandleAsync(mediaAssetIds, cancellationToken);
+    }
 }

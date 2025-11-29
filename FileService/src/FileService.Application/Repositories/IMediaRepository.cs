@@ -10,4 +10,5 @@ public interface IMediaRepository
     public Task<UnitResult<Error>> AddAsync(MediaAsset mediaAsset, CancellationToken cancellationToken);
     public Task<Result<MediaAsset, Error>> GetByIdAsync(Guid id, CancellationToken cancellationToken);
     public Task<UnitResult<Error>> SaveChangesAsync(CancellationToken cancellationToken);
+    public Task<List<MediaAsset>> GetBatchAsync(List<Guid> ids,  CancellationToken cancellationToken);
 }

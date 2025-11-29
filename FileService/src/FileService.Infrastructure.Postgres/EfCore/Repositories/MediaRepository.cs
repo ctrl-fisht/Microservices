@@ -48,4 +48,12 @@ public class MediaRepository : IMediaRepository
             return UnitResult.Failure(Error.Failure("save.changes.error", "Error occured while saving changes"));
         }
     }
+
+    public async Task<List<MediaAsset>> GetBatchAsync(List<Guid> ids, CancellationToken cancellationToken)
+    {
+        return await _context.MediaAssets
+            .Where(x => x.Status != Status.Deleted)
+            .Where(x => ids.Contains(x.Id))
+            .ToListAsync(cancellationToken);
+    }
 }
