@@ -1,5 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using FileService.Application.Repositories;
+using FileService.Domain;
 using FileService.Domain.Entities;
 using FileService.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +28,7 @@ public class MediaRepository : IMediaRepository
     public async Task<Result<MediaAsset, Error>> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         var asset = await _context.MediaAssets
+            .Where(x => x.Status != Status.Deleted)
             .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
         if  (asset == null)
             return Error.NotFound("entity.not.found", $"Asset with given id={id} doesn't exist");

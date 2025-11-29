@@ -1,4 +1,5 @@
-﻿using FileService.Contracts.Requests;
+﻿using FileService.Contracts.Dtos;
+using FileService.Contracts.Requests;
 using FileService.Contracts.Responses;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Framework.Results;
@@ -47,5 +48,15 @@ public class FilesController() : ControllerBase
         CancellationToken cancellationToken)
     {
         return await handler.HandleAsync(request, cancellationToken);
+    }
+
+    [HttpGet]
+    [Route("{mediaAssetId:guid}")]
+    public async Task<EndpointResult<MediaAssetInfoDto>> GetMediaAssetInfo(
+        [FromRoute] Guid mediaAssetId,
+        [FromServices] Features.GetMediaAssetInfo.Handler handler,
+        CancellationToken cancellationToken)
+    {
+        return await handler.HandleAsync(mediaAssetId, cancellationToken);
     }
 }
