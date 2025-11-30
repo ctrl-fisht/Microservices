@@ -75,10 +75,8 @@ public class Handler
         var uploadIdResult = await _s3Provider.StartMultipartUploadAsync(asset.RawKey, asset.MediaData, cancellationToken);
         if (uploadIdResult.IsFailure)
             return uploadIdResult.Error.ToErrors();
-        
-        var assetAddResult = await _mediaRepository.AddAsync(asset, cancellationToken);
-        if (assetAddResult.IsFailure)
-            return assetAddResult.Error.ToErrors();
+
+        await _mediaRepository.AddAsync(asset, cancellationToken);
         
         var generateUrlsResult = await _s3Provider.GenerateAllChunkUploadUrlsAsync(
             asset.RawKey, uploadIdResult.Value, totalChunks, cancellationToken);

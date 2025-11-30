@@ -142,11 +142,11 @@ public class S3Provider : IS3Provider
         }
     }
 
-    public async Task<Result<IReadOnlyList<string>, Error>> GenerateDownloadUrlsAsync(
+    public async Task<Result<IReadOnlyList<AssetDownloadUrl>, Error>> GenerateDownloadUrlsAsync(
         IEnumerable<StorageKey> keys,
         CancellationToken cancellationToken)
     {
-        var urls = new List<string>();
+        var urls = new List<AssetDownloadUrl>();
 
         try
         {
@@ -162,7 +162,7 @@ public class S3Provider : IS3Provider
                 };
 
                 var url = await _s3Client.GetPreSignedURLAsync(request);
-                urls.Add(url);
+                urls.Add(new AssetDownloadUrl() { Key = key, Url = url });
             }
 
             return urls;

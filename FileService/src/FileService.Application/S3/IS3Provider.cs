@@ -12,7 +12,7 @@ public interface IS3Provider
     Task<UnitResult<Error>> DeleteFileAsync(StorageKey key, CancellationToken cancellationToken);
     Task<Result<string, Error>> GenerateUploadUrlAsync(StorageKey key);
     Task<Result<string, Error>> GenerateDownloadUrlAsync(StorageKey key);
-    Task<Result<IReadOnlyList<string>, Error>> GenerateDownloadUrlsAsync(IEnumerable<StorageKey> keys, CancellationToken cancellationToken);
+    Task<Result<IReadOnlyList<AssetDownloadUrl>, Error>> GenerateDownloadUrlsAsync(IEnumerable<StorageKey> keys, CancellationToken cancellationToken);
     
     Task<Result<string, Error>> StartMultipartUploadAsync(StorageKey key, MediaData mediaData, CancellationToken cancellationToken);
     Task<Result<string, Error>> GenerateChunkUploadUrlAsync(StorageKey key, string uploadId, int partNumber);
