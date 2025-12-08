@@ -26,11 +26,11 @@ app.UseHttpMetrics();
 
 if (app.Environment.IsDevelopment())
 {
-    using (IServiceScope scope = app.Services.CreateScope())
-    {
-        var dbContext = scope.ServiceProvider.GetRequiredService<FileServiceDbContext>();
-        await dbContext.Database.MigrateAsync();
-    }
+    // using (IServiceScope scope = app.Services.CreateScope())
+    // {
+    //     var dbContext = scope.ServiceProvider.GetRequiredService<FileServiceDbContext>();
+    //     await dbContext.Database.MigrateAsync();
+    // }
     app.MapOpenApi();
     app.UseSwaggerUI(options =>
     {
@@ -44,3 +44,5 @@ app.MapMetrics();
 
 // app.UseAppEndpoints();
 app.Run();
+
+public partial class Program;

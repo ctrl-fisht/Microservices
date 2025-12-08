@@ -270,9 +270,9 @@ public class S3Provider : IS3Provider
                 BucketName = key.Bucket,
                 Key = key.Value,
                 UploadId = uploadId,
-                PartETags = new List<Amazon.S3.Model.PartETag>(
+                PartETags = new List<PartETag>(
                     etags
-                        .Select(etag => new Amazon.S3.Model.PartETag(etag.PartNumber, etag.ETag))).ToList()
+                        .Select(etag => new PartETag(etag.PartNumber, etag.ETag))).ToList()
             };
             var response = await _s3Client.CompleteMultipartUploadAsync(request, cancellationToken);
             return new S3CompleteMultipartUploadResponse();

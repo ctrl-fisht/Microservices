@@ -11,6 +11,8 @@ public record Error
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public ErrorType Type { get; }
     public string? InvalidField { get; }
+    
+    [JsonConstructor]
     private Error(string code, string message, ErrorType type, string? invalidField = null)
     {
         Code = code;
@@ -66,5 +68,10 @@ public record Error
     public Errors ToErrors()
     {
         return new Errors(this);
+    }
+
+    public override string ToString()
+    {
+        return $"code: {Code}, message: {Message}, type: {Type}, invalidField: {InvalidField}";
     }
 }

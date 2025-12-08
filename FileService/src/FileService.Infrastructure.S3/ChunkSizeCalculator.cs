@@ -14,15 +14,15 @@ public class ChunkSizeCalculator : IChunkSizeCalculator
         _options = options.Value;
     }
 
-    public (int TotalChunks, long ChunkSize) Calculate(long fileSize)
+    public (int TotalChunks, int ChunkSize) Calculate(long fileSize)
     {
         if (fileSize <= _options.RecommendedChunkSize)
-            return (1, fileSize);
+            return (1, (int)fileSize);
 
         int calculated = (int)Math.Ceiling((double)fileSize / _options.RecommendedChunkSize);
         
         var totalChunks = Math.Min(calculated, _options.MaxChunks);
         long chunkSize = fileSize / totalChunks;
-        return (totalChunks, chunkSize);
+        return (totalChunks, (int)chunkSize);
     }
 }

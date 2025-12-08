@@ -5,7 +5,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <PackageId>Shared.Kernel</PackageId>
-        <Version>1.0.2</Version>
+        <Version>1.0.8</Version>
         <Authors>ctrlfisht</Authors>
         <Company>Company</Company>
         <Description>Shared kernel for .NET Services</Description>

@@ -87,5 +87,5 @@ public sealed record StorageKey
     }
 
     public static StorageKey FromDb(string bucket, string? prefix, string key)
-        => new(bucket, prefix, key);
+        => new(bucket, key, prefix);
 }

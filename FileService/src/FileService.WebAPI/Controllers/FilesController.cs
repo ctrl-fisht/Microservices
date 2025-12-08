@@ -7,7 +7,7 @@ using Features = FileService.Application.Features;
 namespace FileService.WebAPI.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class FilesController() : ControllerBase
 {
     [HttpPost]

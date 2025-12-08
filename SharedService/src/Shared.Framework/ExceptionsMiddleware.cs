@@ -32,7 +32,7 @@ public class ExceptionsMiddleware
             
             var envelope = Envelope.Error(
                 AppErrors.General.SomethingWentWrong()
-                    .ToErrors());
+                    .ToErrors().List);
             await context.Response.WriteAsJsonAsync(envelope);
         }
     }
