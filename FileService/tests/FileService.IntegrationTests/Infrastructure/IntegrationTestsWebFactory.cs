@@ -1,4 +1,5 @@
-﻿using Amazon.S3;
+﻿using System.Data.Common;
+using Amazon.S3;
 using FileService.Infrastructure.Postgres;
 using FileService.Infrastructure.S3;
 using FileService.Infrastructure.S3.S3BucketInitializer;
@@ -11,6 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Npgsql;
+using Respawn;
 using Testcontainers.Minio;
 using Testcontainers.PostgreSql;
 
@@ -30,7 +33,9 @@ public class IntegrationTestsWebFactory : WebApplicationFactory<Program>, IAsync
         .WithUsername("minioadmin")
         .WithPassword("minioadmin")
         .Build();
-    
+
+    private Respawner _respawner = null!;
+    private DbConnection _dbConnection = null!;
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.ConfigureAppConfiguration((_, config) =>
@@ -71,6 +76,11 @@ public class IntegrationTestsWebFactory : WebApplicationFactory<Program>, IAsync
         });
     }
     
+    public async Task ResetDatabaseAsync()
+    {
+        await _respawner.ResetAsync(_dbConnection);
+    }
+    
     public async Task InitializeAsync()
     {
         await _dbContainer.StartAsync();
@@ -85,12 +95,25 @@ public class IntegrationTestsWebFactory : WebApplicationFactory<Program>, IAsync
         var myService = hostedServices
             .OfType<S3BucketInitializerService>()
             .First();
-        // todo: инициализировал бакеты, но тоже не помогло.
         await myService.StartAsync(CancellationToken.None);
+        
+        _dbConnection = new NpgsqlConnection(_dbContainer.GetConnectionString());
+        await _dbConnection.OpenAsync();
+        
+        _respawner = await Respawner.CreateAsync(
+            _dbConnection,
+            new RespawnerOptions
+            {
+                DbAdapter = DbAdapter.Postgres,
+                SchemasToInclude = ["public"]
+            });
     }
 
     public new async Task DisposeAsync()
     {
+        await _dbConnection.CloseAsync();
+        await _dbConnection.DisposeAsync();
+        
         await _dbContainer.StopAsync();
         await _dbContainer.DisposeAsync();
         

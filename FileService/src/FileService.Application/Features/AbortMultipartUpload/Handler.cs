@@ -46,9 +46,9 @@ public sealed class Handler
         if (abortResult.IsFailure)
             return abortResult.Error.ToErrors();
 
-        var markFailedResult = asset.MarkFailed(DateTime.UtcNow);
-        if (markFailedResult.IsFailure)
-            return markFailedResult.Error.ToErrors();
+        var markDeletedResult = asset.MarkDeleted(DateTime.UtcNow);
+        if (markDeletedResult.IsFailure)
+            return markDeletedResult.Error.ToErrors();
         
         var saveChangesResult = await _mediaRepository.SaveChangesAsync(cancellationToken);
         if (saveChangesResult.IsFailure)

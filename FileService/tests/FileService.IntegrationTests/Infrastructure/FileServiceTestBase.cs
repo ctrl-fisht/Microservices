@@ -5,15 +5,18 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace FileService.IntegrationTests.Infrastructure;
 
-public class FileServiceTestBase : IClassFixture<IntegrationTestsWebFactory>
+public class FileServiceTestBase : IClassFixture<IntegrationTestsWebFactory>, IAsyncLifetime
 {
     public const string TEST_FILENAME = "test-file.mp4";
     public const string TEST_FILE_FOLDER = "Resources";
+
+    private readonly Func<Task> _resetDatabase;
     protected FileServiceTestBase(IntegrationTestsWebFactory factory)
     {
         AppHttpClient = factory.CreateClient();
         HttpClient = new HttpClient();
         Services = factory.Services;
+        _resetDatabase = factory.ResetDatabaseAsync;
     }
     
     protected async Task<T> ExecuteInDb<T>(Func<FileServiceDbContext, Task<T>> func)
@@ -36,4 +39,9 @@ public class FileServiceTestBase : IClassFixture<IntegrationTestsWebFactory>
     protected HttpClient HttpClient { get; init; }
 
     protected HttpClient AppHttpClient { get; init; }
+    public Task InitializeAsync()
+    => Task.CompletedTask;
+
+    public async Task DisposeAsync()
+        => await _resetDatabase();
 }

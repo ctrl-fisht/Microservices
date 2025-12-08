@@ -26,8 +26,8 @@ public class Handler
         if (mediaAssetResult.IsFailure)
             return mediaAssetResult.Error.ToErrors();
         var asset = mediaAssetResult.Value;
-
-        var deletedResult = asset.MarkDeleted();
+        
+        var deletedResult = asset.MarkDeleted(DateTime.UtcNow);
         if (deletedResult.IsFailure)
             return deletedResult.Error.ToErrors();
         
