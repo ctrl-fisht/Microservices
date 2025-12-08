@@ -100,7 +100,6 @@ public static class HttpResponseExtensions
     public static async Task<Result<TResponse, Errors>> ToResult<TResponse>(
         this HttpResponseMessage response, 
         CancellationToken cancellationToken = default)
-    where TResponse : class
     {
         Envelope<TResponse>? envelope = await response.Content.ReadFromJsonAsync<Envelope<TResponse>>(cancellationToken);
         if (envelope is null) throw new BadHttpRequestException("Response is not envelope");
