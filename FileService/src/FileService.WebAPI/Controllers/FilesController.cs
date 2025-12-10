@@ -63,11 +63,11 @@ public class FilesController() : ControllerBase
     [HttpPost]
     [Route("batch")]
     public async Task<EndpointResult<List<MediaAssetInfoDto>>> GetMediaAssetInfoBatch(
-        [FromBody] List<Guid> mediaAssetIds,
+        [FromBody] GetMediaAssetsInfoRequest request,
         [FromServices] Features.GetMediaAssetsInfo.Handler handler,
         CancellationToken cancellationToken)
     {
-        return await handler.HandleAsync(mediaAssetIds, cancellationToken);
+        return await handler.HandleAsync(request, cancellationToken);
     }
     
     [HttpGet]
