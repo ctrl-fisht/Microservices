@@ -2,10 +2,12 @@
 
 namespace Shared.Kernel.Errors;
 
-public class Errors : IEnumerable<Error>
+public class Errors
 {
     private readonly List<Error> _errors;
 
+    public List<Error> List => _errors;
+    public bool HasErrors() => _errors.Count > 0;
     public Errors(Error error)
     {
         _errors =  new List<Error> { error };
@@ -15,14 +17,9 @@ public class Errors : IEnumerable<Error>
     {
         _errors = new List<Error>(errors);
     }
-    
-    public IEnumerator<Error> GetEnumerator()
-    {
-        return _errors.GetEnumerator();
-    }
 
-    IEnumerator IEnumerable.GetEnumerator()
+    public override string ToString()
     {
-        return GetEnumerator();
+        return string.Join(Environment.NewLine, _errors);
     }
 }

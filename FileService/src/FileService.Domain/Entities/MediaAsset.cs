@@ -80,10 +80,10 @@ public abstract class MediaAsset
         return UnitResult.Success<Error>();
     }
 
-    public UnitResult<Error> MarkDeleted()
+    public UnitResult<Error> MarkDeleted(DateTime dateTime)
     {
         Status = Status.Deleted;
-        UpdatedAt = DateTime.Now;
+        UpdatedAt = dateTime;
         return UnitResult.Success<Error>();
     }
 }

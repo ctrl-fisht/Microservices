@@ -1,5 +1,6 @@
 ﻿<Project Sdk="Microsoft.Net.Sdk">
   <ItemGroup>
+    <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" />
     <PackageReference Include="AWSSDK.S3" />
     <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" />
     <PackageReference Include="Microsoft.Extensions.Options" />

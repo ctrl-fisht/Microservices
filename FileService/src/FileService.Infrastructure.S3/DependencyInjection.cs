@@ -1,12 +1,9 @@
-﻿using Amazon.S3;
-using Amazon.S3.Model;
-using FileService.Application.Repositories;
+﻿using Amazon;
+using Amazon.S3;
 using FileService.Application.S3;
 using FileService.Infrastructure.S3.S3BucketInitializer;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace FileService.Infrastructure.S3;
@@ -31,7 +28,7 @@ public static class DependencyInjection
                 };
                 return new AmazonS3Client(s3Options.AccessKey, s3Options.SecretKey, s3Config);
             });
-
+        
         if (initializeBuckets)
             services.AddHostedService<S3BucketInitializerService>();
 

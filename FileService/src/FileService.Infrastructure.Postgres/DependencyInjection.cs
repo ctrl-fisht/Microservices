@@ -14,7 +14,7 @@ public static class DependencyInjection
             if (string.IsNullOrWhiteSpace(connString))
                 throw new ArgumentNullException($"Postgres connection string is null or empty");
 
-            services.AddDbContext<FileServiceDbContext>(options =>
+            services.AddDbContextPool<FileServiceDbContext>(options =>
             {
                 options.UseNpgsql(connString,
                     npgsqlOptions =>

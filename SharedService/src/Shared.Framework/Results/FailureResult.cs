@@ -6,23 +6,23 @@ namespace Shared.Framework.Results;
 
 public class FailureResult : IResult
 {
-    private readonly Errors _errors;
+    private readonly List<Error> _errors;
 
     public FailureResult(Errors errors)
     {
-        _errors = errors;
+        _errors = errors.List;
     }
 
     public FailureResult(Error error)
     {
-        _errors = error.ToErrors();
+        _errors = new List<Error> { error };
     }
 
 
     public Task ExecuteAsync(HttpContext httpContext)
     {
         ArgumentNullException.ThrowIfNull(httpContext);
-        if (!_errors.Any())
+        if (_errors.Count > 0)
         {
             httpContext.Response.StatusCode = 500;
             return httpContext.Response.WriteAsJsonAsync(Envelope.Error(_errors));

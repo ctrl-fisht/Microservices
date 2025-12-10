@@ -17,6 +17,12 @@ public static class DependencyInjection
         services.AddScoped<Features.GetChunkUploadUrl.Handler>();
         services.AddScoped<Features.CompleteMultipartUpload.Handler>();
         services.AddScoped<Features.AbortMultipartUpload.Handler>();
+        services.AddScoped<Features.DeleteMediaAsset.Handler>();
+        
+        services.AddScoped<Features.GetMediaAssetInfo.Handler>();
+        services.AddScoped<Features.GetMediaAssetsInfo.Handler>();
+        services.AddScoped<Features.GetMediaAssetDownloadUrl.Handler>();
+        
         return services;
     }
 }
