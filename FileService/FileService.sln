@@ -33,6 +33,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{6FD9D01B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileService.IntegrationTests", "tests\FileService.IntegrationTests\FileService.IntegrationTests.csproj", "{ED87B89B-54B7-4453-8918-F67211AA65B5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileService.Communication", "src\FileService.Communication\FileService.Communication.csproj", "{2050DD0B-C281-4111-A68D-9C5E5B20A523}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -70,6 +72,10 @@ Global
 		{ED87B89B-54B7-4453-8918-F67211AA65B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED87B89B-54B7-4453-8918-F67211AA65B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED87B89B-54B7-4453-8918-F67211AA65B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2050DD0B-C281-4111-A68D-9C5E5B20A523}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2050DD0B-C281-4111-A68D-9C5E5B20A523}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2050DD0B-C281-4111-A68D-9C5E5B20A523}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2050DD0B-C281-4111-A68D-9C5E5B20A523}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{ED87B89B-54B7-4453-8918-F67211AA65B5} = {6FD9D01B-B4AF-4B8F-94DC-45A78BA5BEA7}

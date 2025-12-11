@@ -93,22 +93,3 @@ public class MultipartUploadFileTests : FileServiceTestBase
             : throw new Exception($"Failed to complete upload: Errors = {completeUploadResult.Error}");
     }
 }
-
-
-public static class HttpResponseExtensions
-{
-    public static async Task<Result<TResponse, Errors>> ToResult<TResponse>(
-        this HttpResponseMessage response, 
-        CancellationToken cancellationToken = default)
-    {
-        Envelope<TResponse>? envelope = await response.Content.ReadFromJsonAsync<Envelope<TResponse>>(cancellationToken);
-        if (envelope is null) throw new BadHttpRequestException("Response is not envelope");
-
-        Result<TResponse, Errors> result;
-        if (envelope.Errors is null && envelope.Result is not null)
-            return envelope.Result;
-        if (envelope.Errors is not null)
-            return new Errors(envelope.Errors);
-        throw new ArgumentOutOfRangeException("Envelope invariant");
-    }
-}

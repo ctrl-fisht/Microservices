@@ -1,10 +1,10 @@
 ﻿using System.Net.Http.Json;
 using CSharpFunctionalExtensions;
-using FileService.Contracts.Dtos;
 using FileService.Contracts.Requests;
 using FileService.Contracts.Responses;
 using FileService.Domain;
 using FileService.IntegrationTests.Infrastructure;
+using Shared.Kernel;
 using Shared.Kernel.Errors;
 
 namespace FileService.IntegrationTests.Features;

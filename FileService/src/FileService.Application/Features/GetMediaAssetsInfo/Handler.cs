@@ -2,6 +2,7 @@
 using FileService.Application.Repositories;
 using FileService.Application.S3;
 using FileService.Contracts.Dtos;
+using FileService.Contracts.Requests;
 using FileService.Domain;
 using Shared.Kernel.Errors;
 
@@ -20,14 +21,14 @@ public class Handler
     }
 
     public async Task<Result<List<MediaAssetInfoDto>, Errors>> HandleAsync(
-        List<Guid> mediaAssetIds,
+        GetMediaAssetsInfoRequest request,
         CancellationToken cancellationToken)
     {
-        var assets = await _mediaRepository.GetBatchAsync(mediaAssetIds, cancellationToken);
+        var assets = await _mediaRepository.GetBatchAsync(request.MediaAssetIds.ToList(), cancellationToken);
         if (assets.Count == 0)
             return Error.NotFound("assets.not.found", "Given assets not found").ToErrors();
 
-        var notFound = mediaAssetIds.Where(id => !assets.Any(asset => asset.Id == id)).ToList();
+        var notFound = request.MediaAssetIds.Where(id => !assets.Any(asset => asset.Id == id)).ToList();
         if (notFound.Count > 0)
             return Error.NotFound(
                 "assets.not.found",

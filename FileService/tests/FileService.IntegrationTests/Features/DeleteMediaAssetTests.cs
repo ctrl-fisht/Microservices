@@ -3,6 +3,7 @@ using FileService.Contracts.Requests;
 using FileService.Contracts.Responses;
 using FileService.Domain;
 using FileService.IntegrationTests.Infrastructure;
+using Shared.Kernel;
 
 namespace FileService.IntegrationTests.Features;
 
