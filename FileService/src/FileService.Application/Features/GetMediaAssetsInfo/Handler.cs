@@ -24,7 +24,7 @@ public class Handler
         GetMediaAssetsInfoRequest request,
         CancellationToken cancellationToken)
     {
-        var assets = await _mediaRepository.GetBatchAsync(request.MediaAssetIds, cancellationToken);
+        var assets = await _mediaRepository.GetBatchAsync(request.MediaAssetIds.ToList(), cancellationToken);
         if (assets.Count == 0)
             return Error.NotFound("assets.not.found", "Given assets not found").ToErrors();
 

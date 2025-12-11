@@ -5,6 +5,7 @@ namespace FileService.Communication;
 
 public static class FileServiceExtensions
 {
+    public const string FS_RETRY_POLICY_NAME = "FileServiceRetryPolicy";
     public static IServiceCollection AddFileServiceHttpCommunication(
         this IServiceCollection services,
         IConfiguration config)
@@ -16,7 +17,7 @@ public static class FileServiceExtensions
         {
             x.BaseAddress = new Uri(options!.Url);
         })
-        .AddPolicyHandlerFromRegistry("FileServiceRetryPolicy");
+        .AddPolicyHandlerFromRegistry(FS_RETRY_POLICY_NAME);
 
         return services;
     }

@@ -2,5 +2,5 @@
 
 public sealed record GetMediaAssetsInfoRequest
 {
-    public required List<Guid> MediaAssetIds { get; init; }
+    public required IReadOnlyList<Guid> MediaAssetIds { get; init; }
 }

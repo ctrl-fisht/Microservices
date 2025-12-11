@@ -34,15 +34,15 @@ public class FileServiceHttpClient : IFileService
         _logger = logger;
     }
     
-    public async Task<Result<MediaAssetInfoDto, Errors>> GetMediaAssetInfo(Guid mediaAssetId, CancellationToken ct)
+    public Task<Result<MediaAssetInfoDto, Errors>> GetMediaAssetInfo(Guid mediaAssetId, CancellationToken ct)
     {
-        return await SendAsync<MediaAssetInfoDto>(
+        return SendAsync<MediaAssetInfoDto>(
             async () => await _httpClient.GetAsync($"/api/files/{mediaAssetId}", ct), ct);
     }
 
-    public async Task<Result<List<MediaAssetInfoDto>, Errors>> GetMediaAssetsInfo(GetMediaAssetsInfoRequest request, CancellationToken ct)
+    public Task<Result<List<MediaAssetInfoDto>, Errors>> GetMediaAssetsInfo(GetMediaAssetsInfoRequest request, CancellationToken ct)
     {
-        return await SendAsync<List<MediaAssetInfoDto>>(
+        return SendAsync<List<MediaAssetInfoDto>>(
             async () => await _httpClient.PostAsJsonAsync($"/api/files/batch", request, ct), ct);
     }
 }
